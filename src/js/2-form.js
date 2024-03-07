@@ -25,6 +25,6 @@ feedbackForm.addEventListener('submit', evt => {
     localStorage.clear();
     feedbackForm.reset();
   } else {
-    alert('Заповніть всі поля');
+    alert('Заповніть всі поля!');
   }
 });
