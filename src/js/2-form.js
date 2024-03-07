@@ -1,4 +1,3 @@
-// const feedbackFormInput = document.querySelectorAll('.feedback-form-input');
 const feedbackForm = document.querySelector('.feedback-form');
 const feedbackFormInput = Array.from(
   document.querySelectorAll('.feedback-form-input')
