@@ -91,7 +91,7 @@ function createGallery() {
 }
 createGallery();
 
-var lightbox = new SimpleLightbox('.gallery a', {
+const lightbox = new SimpleLightbox('.gallery a', {
   captionPosition: 'bottom',
   captionDelay: 250,
   captionsData: 'alt',

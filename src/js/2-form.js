@@ -1,25 +1,38 @@
 const feedbackForm = document.querySelector('.feedback-form');
-const feedbackFormInput = Array.from(
-  document.querySelectorAll('.feedback-form-input')
-);
+const localStorageKey = 'feedback-form-state';
+const { email, message } = feedbackForm.elements;
 
-feedbackFormInput.forEach(element => {
-  const feedbackFormState = element.name === 'email' ? 'email' : 'message';
-  element.value = localStorage.getItem(feedbackFormState);
+//перевіряємо чи є у полів значення в localStorage
+const savedFormData = localStorage.getItem('feedback-form-state');
+const formDataFromLocalStorage = JSON.parse(savedFormData);
 
-  element.addEventListener('input', e => {
-    localStorage.setItem(feedbackFormState, e.target.value.trim());
-  });
+if (savedFormData) {
+  email.value = formDataFromLocalStorage.email;
+  message.value = formDataFromLocalStorage.message;
+}
+
+feedbackForm.addEventListener('input', evt => {
+  evt.preventDefault();
+
+  const formDataToLocalStorage = {
+    email: email.value,
+    message: message.value,
+  };
+  localStorage.setItem(localStorageKey, JSON.stringify(formDataToLocalStorage));
 });
- 
+
 feedbackForm.addEventListener('submit', evt => {
   evt.preventDefault();
- 
-  const isAllFieldsFilled = feedbackFormInput.every(
-    element => element.value.trim() !== ''
-  );    
-   
-  if (isAllFieldsFilled) {
+  const feedbackFormInputs = document.querySelectorAll('.feedback-form-input');
+
+  let count = 0;
+  for (let i = 0; i < feedbackFormInputs.length; i++) {
+    if (feedbackFormInputs[i].value === '') {
+      count++;
+    }
+  }
+
+  if (count === 0) {
     console.log(localStorage);
     localStorage.clear();
     feedbackForm.reset();
